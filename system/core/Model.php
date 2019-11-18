@@ -47,6 +47,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		https://codeigniter.com/user_guide/libraries/config.html
  */
 class CI_Model {
+    
+    /**
+	 * @var CI_DB_active_record
+	 */
+	var $db;
+        var $inv;
 
 	/**
 	 * Class constructor
@@ -54,7 +60,10 @@ class CI_Model {
 	 * @link	https://github.com/bcit-ci/CodeIgniter/issues/5332
 	 * @return	void
 	 */
-	public function __construct() {}
+	public function __construct() {
+            log_message('debug', "Model Class Initialized");
+           //$this->db = $this->load->database('inv', TRUE);
+        }
 
 	/**
 	 * __get magic
@@ -70,7 +79,8 @@ class CI_Model {
 		//	If you're here because you're getting an error message
 		//	saying 'Undefined Property: system/core/Model.php', it's
 		//	most likely a typo in your model code.
-		return get_instance()->$key;
+		$CI =& get_instance();
+		return $CI->$key;
 	}
 
 }
