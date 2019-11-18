@@ -6,6 +6,6 @@ $route['default_controller'] = 'Pessoa';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
 
-$route['buscar_pessoa'] = 'Pessoa/loadBuscarPessoas';
-$route['Pessoa'] = 'Pessoa/index';
-$route['Pessoa/(:num)'] = 'Pessoa/index/$1';
+$route['buscar_pessoa'] = 'Pessoa/index';
+$route['cad_pessoa'] = 'Pessoa/cad_pessoa';
+$route['cad_pessoa/(:num)'] = 'Pessoa/cad_pessoa/$1';

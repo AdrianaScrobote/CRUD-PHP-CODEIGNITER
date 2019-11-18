@@ -23,7 +23,7 @@ $(document).ready(function (){
 
     $(document).on('click', '.editarPessoa', function(){ 
         var id = $(this).data("id");
-        var url = base_url + 'Pessoa/' + id
+        var url = base_url + 'cad_pessoa/' + id
         window.location.href = url
     });   
 
@@ -31,37 +31,55 @@ $(document).ready(function (){
     $(document).on('click', '.excluirPessoa', function(){ 
         var id = $(this).data("id")
         var elem = $(this)
- 
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            url: base_url + 'Pessoa/excluir/' + id,
-            async: true,
-            data: {'id': id},
-            success: function(response) {
-                    if(response){
-                        var qtdLinha = $('.table tbody tr').length;
-                        if(qtdLinha > 1){
-                            elem.closest('tr').remove()
+
+        bootbox.confirm({
+            title: "Excluir pessoa?",
+            message: "Você realmente quer excluir esta pessoa? Esta alteração não pode ser desfeita.",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Não'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> Sim'
+                }
+            },
+            callback: function (result) {
+                if(result){
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: base_url + 'Pessoa/excluir/' + id,
+                        async: true,
+                        data: {'id': id},
+                        success: function(response) {
+                                if(response){
+                                    var qtdLinha = $('.table tbody tr').length;
+                                    if(qtdLinha > 1){
+                                        elem.closest('tr').remove()
+                                    }
+                                    else{
+                                        $('#resultBusca').html('')
+                                    }
+                                    
+                                }
+                                else{
+                                    bootbox.alert('<br><div class="alert alert-danger" role="alert"><i class="fa fa-check-circle"></i> Ocorreu um erro, por favor tente novamente!</div>', function(){
+                                        location.reload();
+                                    })
+                                }
                         }
-                        else{
-                            $('#resultBusca').html('')
-                        }
-                        
-                    }
-                    else{
-                        bootbox.alert('<br><div class="alert alert-danger" role="alert"><i class="fa fa-check-circle"></i> Ocorreu um erro, por favor tente novamente!</div>', function(){
-                            location.reload();
-                        })
-                    }
+                    });
+                }
             }
         });
+ 
+        
     });
 
 
     $('#novo').click(function (e){
         e.preventDefault();
-        var url = base_url + 'Pessoa'
+        var url = base_url + 'cad_pessoa'
         window.location.href = url
     }); 
     /*************  Fim tela buscar pessoas *******************/
@@ -70,7 +88,7 @@ $(document).ready(function (){
 
     /*************  Inicio tela salvar/editar pessoa **************/
     $('#voltar').click(function (){
-        var url = base_url + 'buscar_pessoa'
+        var url = base_url + 'buscar_pessoa/'
         window.location.href = url
     });
     
@@ -111,7 +129,7 @@ $(document).ready(function (){
             data: dados,
             success: function(response) {
                 bootbox.alert(response.msg, function(){
-                    var url = base_url + 'Pessoa/' + response.id
+                    var url = base_url + 'cad_pessoa/' + response.id
                     window.location.href = url
                 })
             },

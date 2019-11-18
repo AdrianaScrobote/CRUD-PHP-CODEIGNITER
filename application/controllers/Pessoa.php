@@ -16,10 +16,48 @@ class Pessoa extends CI_Controller{
     }
 
 
+    /* INICIO TELA BUSCAR PESSOAS */
+
+    //carrega tela de buscar pessoas
+    function index(){
+        array_push($this->js, 'includes/js/Pessoa.js');
+
+        $this->load->view('buscarPessoa');
+        
+    }  
+
+
+    //busca pessoas
+    //se nenhuma pessoa for filtrada, trará as 50 primeiras pessoas que encontrar
+    function buscarPessoas(){
+        
+        extract($this->input->post());
+
+        //remove caracteres especiais
+        $busca = str_replace(array('"', '%', '\'', ';', ',', '<', '>'), '', $busca);
+        $result = $this->pessoa->buscarPessoa($busca);
+        
+        $result = $this->pessoalib->montarPessoas($result);
+
+        print(json_encode($result));
+    }   
+    
+    
+    //exclui uma pessoa
+    function excluir(){
+        
+        extract($this->input->post());
+        $result = $this->pessoa->excluirPessoa($id);
+        print(json_encode($result));
+    }   
+    /* FIM TELA BUSCAR PESSOAS */
+
+
+
     /* INICIO TELA SALVAR/EDITAR PESSOA */
 
     //carrega tela de cadastro de uma pessoa
-    function index($pessoaid = null){
+    function cad_pessoa($pessoaid = null){
         array_push($this->js, 'includes/js/Pessoa.js');
 
         $dados = null;
@@ -64,38 +102,5 @@ class Pessoa extends CI_Controller{
 
 
 
-    /* INICIO TELA BUSCAR PESSOAS */
-
-    //carrega tela de buscar pessoas
-    function loadBuscarPessoas(){
-        array_push($this->js, 'includes/js/Pessoa.js');
-        $this->load->view('buscarPessoa');
-        
-    }  
-
-
-    //busca pessoas
-    //se nenhuma pessoa for filtrada, trará as 50 primeiras pessoas que encontrar
-    function buscarPessoas(){
-        
-        extract($this->input->post());
-
-        //remove caracteres especiais
-        $busca = str_replace(array('"', '%', '\'', ';', ',', '<', '>'), '', $busca);
-        $result = $this->pessoa->buscarPessoa($busca);
-        
-        $result = $this->pessoalib->montarPessoas($result);
-
-        print(json_encode($result));
-    }   
     
-    
-    //exclui uma pessoa
-    function excluir(){
-        
-        extract($this->input->post());
-        $result = $this->pessoa->excluirPessoa($id);
-        print(json_encode($result));
-    }   
-    /* FIM TELA BUSCAR PESSOAS */
 }

@@ -1,6 +1,8 @@
+<?php //print_r(base_url()); die(); ?>
+
 <head>
-    <link rel="stylesheet" href="includes/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="includes/bootstrap/css/internas.css">
+    <link rel="stylesheet" href="<?php echo base_url() . "includes/bootstrap/css/bootstrap.min.css"; ?>">
+    <link rel="stylesheet" href="<?php echo base_url() . "includes/bootstrap/css/internas.css" ?>">
     <script>var base_url = '<?php echo base_url();?>' </script>      
 
     <?php 
@@ -9,7 +11,7 @@
         $CI = & get_instance();
         if(!empty($CI->js)){
             foreach ($CI->js as $script){
-                echo '<script src="'.$script.'"></script>';
+                echo '<script src="'.base_url().$script.'"></script>';
             }
         }
     ?>

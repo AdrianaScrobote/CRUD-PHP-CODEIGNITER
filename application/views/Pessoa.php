@@ -1,9 +1,9 @@
-<?php //print_r($id); die(); ?>
+<?php //print_r(base_url()); die(); ?>
 
 <head>
     <link rel="stylesheet" href="<?php echo base_url() . "includes/bootstrap/css/bootstrap.min.css"; ?>">
     <link rel="stylesheet" href="<?php echo base_url() . "includes/bootstrap/css/internas.css" ?>">
-    <script>var base_url = '<?php echo base_url();?>' </script>      
+    <script>var base_url = '<?php echo base_url();?>' </script> 
 
     <?php 
         //carrega scripts necessários
